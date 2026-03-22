@@ -1,0 +1,7 @@
+#Dependencies 
+node_modules/
+
+#Enviroment Variables 
+.env
+dist/
+*.js.map
