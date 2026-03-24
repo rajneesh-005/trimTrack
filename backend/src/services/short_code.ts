@@ -7,7 +7,7 @@ export async function generateShortCode():Promise<string>{
     while(true){
         let short_code:string = '';
         for(let i=0;i<7;i++){
-            short_code += short_code[randomInt(0,62)];
+            short_code += shortener[randomInt(0,62)];
         }
 
         const exist = await findByCode(short_code);
