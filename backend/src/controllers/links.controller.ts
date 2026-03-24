@@ -3,7 +3,7 @@ import { Request,Response } from "express";
 
 export async function createLink(req:Request,res:Response){
     try{
-        const {url} = req.body.url;
+        const {url} = req.body;
         if(!url){
             return res.status(400).json({
                 error:"URL is required"

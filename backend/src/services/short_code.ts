@@ -4,14 +4,13 @@ import { randomInt } from "crypto";
 const shortener:string = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
 
 export async function generateShortCode():Promise<string>{
-    let shortened_code:string = '';
-    for(let i=0;i<7;i++){
-        const randomIndex = randomInt(0,62);
-        shortened_code += shortener[randomIndex];
-    }
+    while(true){
+        let short_code:string = '';
+        for(let i=0;i<7;i++){
+            short_code += short_code[randomInt(0,62)];
+        }
 
-    if(await findByCode(shortened_code)!=null){
-        return generateShortCode();
+        const exist = await findByCode(short_code);
+        if(!exist) return short_code;
     }
-    return shortened_code;
 }

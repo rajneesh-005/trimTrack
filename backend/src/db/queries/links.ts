@@ -1,6 +1,6 @@
 import { pool } from "..";
 import {Link,CreateLinkInput} from '@shared/types/links'
-export async function findByCode(code:String):Promise<Link | null>{
+export async function findByCode(code:string):Promise<Link | null>{
     const result = await pool.query<Link>(
         'SELECT * FROM links WHERE short_code = $1',
         [code]
