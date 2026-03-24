@@ -6,6 +6,7 @@ import linkRouter from './routes/links.routes'
 const app = express();
 
 app.use(express.json());
+
 const port = config.PORT;
 
 app.get('/health',(req,res)=>{

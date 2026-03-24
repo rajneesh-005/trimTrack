@@ -11,7 +11,7 @@ export async function findByCode(code:string):Promise<Link | null>{
 
 export async function createLink(data : CreateLinkInput):Promise<Link>{
     const result = await pool.query<Link>(
-        'INSERT INTO link(original_url,short_code) VALUES ($1,$2) RETURNING *',
+        'INSERT INTO links(original_url,short_code) VALUES ($1,$2) RETURNING *',
         [data.url,data.short_code]
     );
 
