@@ -9,16 +9,14 @@ export interface Link{
 
 export interface CreateLinkRequest{
     url:string
-    title?:string
 }
 
 export interface CreateLinkInput{
     short_code:string
     url:string
-    title?:string
 }
 
 export interface CreateLinkResponse{
     short_code:string
-    shorten_url:string
+    short_url:string
 }
