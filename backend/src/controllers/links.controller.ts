@@ -1,5 +1,6 @@
 import { CreateLinkService } from "../services/links.services";
 import { Request,Response } from "express";
+import { listlinks } from "../db/queries/links";
 
 export async function createLink(req:Request,res:Response){
     try{
@@ -21,6 +22,21 @@ export async function createLink(req:Request,res:Response){
 
         res.status(500).json({
             error:"Internal Server Error"
-        })
+        });
     }   
+}
+export async function getLinks(req:Request,res:Response){
+    try{
+        const links = await listlinks();
+        return res.status(200).json({
+            success:true,
+            links
+        });
+    }catch(err){
+        console.log("Get Links Error",err);
+
+        return res.status(500).json({
+            err:"Internal Get Links Error"
+        });
+    }
 }

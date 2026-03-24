@@ -1,6 +1,7 @@
 import { config } from './config';
 import express from 'express';
-import linkRouter from './routes/links.routes'
+import linkRouter from './routes/links.routes'; 
+import redirecRoute from './routes/redirect'
 
 
 const app = express();
@@ -14,6 +15,9 @@ app.get('/health',(req,res)=>{
 });
 
 app.use('/api',linkRouter);
+
+app.use('/',redirecRoute);
+
 
 app.listen(port,()=>{
     console.log(`trimTrack is running at port at ${port}`)

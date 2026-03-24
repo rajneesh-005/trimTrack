@@ -1,8 +1,9 @@
 import { Router } from "express";
-import { createLink } from "../controllers/links.controller";
+import { createLink, getLinks } from "../controllers/links.controller";
 
 const router = Router();
 
 router.post('/shorten',createLink);
+router.get('/links',getLinks);
 
 export default router;
