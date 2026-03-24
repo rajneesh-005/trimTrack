@@ -2,7 +2,7 @@ import { pool } from "..";
 import {Link,CreateLinkInput} from '@shared/types/links'
 export async function findByCode(code:String):Promise<Link | null>{
     const result = await pool.query<Link>(
-        'SELECT * FROM link WHERE short_code = $1',
+        'SELECT * FROM links WHERE short_code = $1',
         [code]
     );
 
@@ -11,7 +11,7 @@ export async function findByCode(code:String):Promise<Link | null>{
 
 export async function createLink(data : CreateLinkInput):Promise<Link>{
     const result = await pool.query<Link>(
-        'INSERT INTO links(original_url,short_code) VALUES ($1,$2) RETURNING *',
+        'INSERT INTO link(original_url,short_code) VALUES ($1,$2) RETURNING *',
         [data.url,data.short_code]
     );
 
