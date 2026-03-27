@@ -1,6 +1,10 @@
 export interface ClickEvent{
-    id:number
     short_code:string
-    clicked_at:Date
     ip_address:string
+    country?:string
+    city?:string
+    device?:string
+    browser?:string
+    os?:string
+    referrer?:string
 }
