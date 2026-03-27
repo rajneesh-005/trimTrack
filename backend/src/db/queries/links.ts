@@ -1,4 +1,4 @@
-import { pool } from "..";
+import { pool } from "../index";
 import {Link,CreateLinkInput} from '@shared/types/links'
 export async function findByCode(code:string):Promise<Link | null>{
     const result = await pool.query<Link>(
