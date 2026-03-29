@@ -97,3 +97,25 @@ export async function getClicksByReferrer(code:string){
         count:parseInt(row.count)
     }));
 }
+
+export async function getStat(code:string){
+    const [total,unique,today,overTime,byDevice,byBrowser,byReferrer] = await Promise.all([
+        getTotalClicks(code),
+        getUniqueVisitors(code),
+        getClicksToday(code),
+        getClicksOverTime(code),
+        getClicksByDevice(code),
+        getClicksByBrowser(code),
+        getClicksByReferrer(code)
+    ]);
+
+    return {
+        total_clicks : total,
+        unique_visitors:unique,
+        clicks_today:today,
+        clicks_over_time:overTime,
+        clicks_by_device:byDevice,
+        clicks_by_browser:byBrowser,
+        clicks_by_referrer:byReferrer
+    }
+}

@@ -30,7 +30,7 @@ export async function getLinks(req:Request,res:Response){
         const links = await listlinks();
         return res.status(200).json({
             success:true,
-            links
+            data:links
         });
     }catch(err){
         console.log("Get Links Error",err);

@@ -12,5 +12,5 @@ export async function ParsingData(short_code:string,ip:string,userAgent:string,r
         browser:data.browser.name,
         os:data.os.name,
         referrer
-    })
+    });
 }
