@@ -43,7 +43,7 @@ export async function loginUser(email:string, password:string){
     if(!passwordMatch) throw new Error('Incorrect Password');
 
     const secret = config.JWT_SECRET;
-    const token = jwt.sign({email:email},secret,{"expiresIn":"7d"});
+    const token = jwt.sign({id:userExists.id,email:email},secret,{"expiresIn":"7d"});
 
     return {
         token,

@@ -3,9 +3,9 @@ import { CreateLinkRequest, Link } from "@shared/types/links";
 import { generateShortCode } from "./short_code";
 import { config } from "../config";
 
-export async function CreateLinkService(data:CreateLinkRequest){
+export async function CreateLinkService(data:CreateLinkRequest,user_id:number){
     const short_code = await generateShortCode();
-    const new_link:Link = await createLink({short_code,url:data.url});
+    const new_link:Link = await createLink({short_code,url:data.url,user_id});
 
     return {
         short_code:new_link.short_code,

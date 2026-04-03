@@ -5,13 +5,19 @@ import { listlinks } from "../db/queries/links";
 export async function createLink(req:Request,res:Response){
     try{
         const {url} = req.body;
+        const user_id = req.user?.id;
         if(!url){
             return res.status(400).json({
                 error:"URL is required"
             });
         }
+        if(!user_id){
+            return res.status(400).json({
+                error:"Unauthorized"
+            })
+        }
 
-        const link = await CreateLinkService({url});
+        const link = await CreateLinkService({url},user_id);
 
         return res.status(201).json({
             success:true,
@@ -27,7 +33,13 @@ export async function createLink(req:Request,res:Response){
 }
 export async function getLinks(req:Request,res:Response){
     try{
-        const links = await listlinks();
+        const user_id = req.user?.id;
+        if(!user_id){ 
+            return res.status(400).json({
+            error:"Unauthorized"
+            })
+        }
+        const links = await listlinks(user_id);
         return res.status(200).json({
             success:true,
             data:links

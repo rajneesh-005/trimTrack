@@ -20,10 +20,9 @@ app.use('/api',authRoute);
 
 app.use('/api',authMiddleware,linkRouter);
 
-app.use('/',authMiddleware,statRouter);
-
 app.use('/',redirecRoute);
 
+app.use('/',authMiddleware,statRouter);
 
 app.listen(port,()=>{
     console.log(`trimTrack is running at port at ${port}`)
