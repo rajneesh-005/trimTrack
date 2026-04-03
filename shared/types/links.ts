@@ -14,6 +14,7 @@ export interface CreateLinkRequest{
 export interface CreateLinkInput{
     short_code:string
     url:string
+    user_id:number
 }
 
 export interface CreateLinkResponse{
