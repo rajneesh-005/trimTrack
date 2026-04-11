@@ -1,16 +1,28 @@
 import React,{useState} from "react";
+import { useNavigate } from "react-router-dom";
 function Home() {
+  const navigate = useNavigate();
   const [url,setUrl] = useState('');
   const [shortUrl,setShortUrl] = useState('');
+  const [copy,setcopy] = useState(false);
+  const [save,setsaved]=useState(false);
 
   const UrlSetter = (event:React.ChangeEvent<HTMLInputElement>) =>{
     setUrl(event.target.value);
   }
 
   async function handleSave(){
+    const token = localStorage.getItem('token');
+    if(shortUrl) return;
+    if(!token){
+      return navigate('/auth');
+    }
     const response = await fetch('/api/shorten',{
       method:'POST',
-      headers:{'Content-Type':'application/json'},
+      headers:{
+        'Content-Type':'application/json',
+        'Authorization':`Bearer ${token}`
+      },
       body: JSON.stringify({url:url})
     })
 
@@ -18,10 +30,29 @@ function Home() {
     setShortUrl(data.data.short_url);
   }
 
+  function handleSaved(){
+    setsaved(true);
+    setTimeout(()=>{
+      setsaved(false);
+    },2000);
+  }
+
   const handleKeyDown = (event:React.KeyboardEvent<HTMLInputElement>) => {
     if(event.key==='Enter'){
       handleSave();
     }
+  }
+
+  async function handlecopy(){
+    await navigator.clipboard.writeText(shortUrl);
+    setcopy(true);
+    setTimeout(() => {
+      setcopy(false);
+    }, 2000);
+  }
+
+  function redirect2Dashboard(){
+    return navigate("/dashboard");
   }
   return (
     <div className="flex flex-col items-center  h-screen bg-black font-mono ">
@@ -37,10 +68,13 @@ function Home() {
             <div className="flex-1 text-black px-3 py-2 bg-amber-100 rounded-lg max-w-xl">
               {shortUrl}
             </div>  
-            <div className="bg-amber-100 cursor-pointer p-2 rounded-lg font-semibold" onClick={handleSave}>save</div>  
-            <div className="bg-amber-100 cursor-pointer p-2 rounded-lg font-semibold">copy</div>  
+            <div className="bg-amber-100 cursor-pointer p-2 rounded-lg font-semibold" onClick={handleSaved}>{save?'Saved!':'Save'}</div>  
+            <div className="bg-amber-100 cursor-pointer p-2 rounded-lg font-semibold" onClick={handlecopy}>{copy?'Copied!':'Copy'}</div>  
         </div> 
       }
+      <div>
+        <button onClick={redirect2Dashboard}>Check your Dashboard</button>
+      </div>
     </div>
   )
 }
