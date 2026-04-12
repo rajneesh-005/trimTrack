@@ -1,0 +1,21 @@
+export interface StatResponse{
+    total_clicks:number
+    unique_visitors:number
+    clicks_today:number
+    clicks_over_time:{
+        day:string;
+        count:number
+    }[]
+    clicks_by_device:{
+        device:string;
+        count:number
+    }[]
+    clicks_by_browser:{
+        browser:string;
+        count:number
+    }[]
+    clicks_by_referrer:{
+        referrer:string;
+        count:number
+    }[]
+}
