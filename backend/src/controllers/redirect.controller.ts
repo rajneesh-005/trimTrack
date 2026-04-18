@@ -10,12 +10,15 @@ export async function redirect(req:Request,res:Response){
                 error : "No Code is found"
             });
         }
+        //calculate time per redirect
+        const start = Date.now();
         const found = await findByCode(code);
         if(found==null){
             return res.status(404).json({
                 msg : "Does Not Exists"
             });
         }
+        console.log(`DB lookup took: ${Date.now()-start}ms`);
 
         res.redirect(302,found.original_url);
         ParsingData(
