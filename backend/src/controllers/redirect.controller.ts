@@ -1,6 +1,7 @@
 import { Request,Response } from "express";
 import { findByCode } from "../db/queries/links";
 import { ParsingData } from "../services/tracker";
+import { getCode, setCode } from "../cache/redis";
 
 export async function redirect(req:Request,res:Response){
     try{
@@ -10,17 +11,20 @@ export async function redirect(req:Request,res:Response){
                 error : "No Code is found"
             });
         }
-        //calculate time per redirect
         const start = Date.now();
-        const found = await findByCode(code);
-        if(found==null){
-            return res.status(404).json({
-                msg : "Does Not Exists"
-            });
+        let url:string|null;
+        const cached = await getCode(code);
+        if(cached){
+            url = cached;
+            console.log(`Redis hit: ${Date.now()-start}ms`)
+        }else{
+            const found = await findByCode(code);
+            if(!found) return res.status(404).json({message:"Does Not Exists"});
+            url = found.original_url;
+            await setCode(code,url);
+            console.log(`DB lookup took: ${Date.now()-start}ms`);
         }
-        console.log(`DB lookup took: ${Date.now()-start}ms`);
-
-        res.redirect(302,found.original_url);
+        res.redirect(302,url);
         ParsingData(
             code,
             req.ip ?? '',

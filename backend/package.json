@@ -21,6 +21,7 @@
     "ipaddr.js": "^2.3.0",
     "jsonwebtoken": "^9.0.3",
     "pg": "^8.20.0",
+    "redis": "^5.12.1",
     "ua-parser-js": "^2.0.9"
   },
   "devDependencies": {
