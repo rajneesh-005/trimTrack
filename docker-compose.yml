@@ -18,11 +18,12 @@ services:
   postgres:
     image: postgres:15-alpine
     environment:
-      - POSTGRES_USER= trimuser
-      - POSTGRES_PASSWORD= urlproj
-      - POSTGRES_DB= trimtrack
+      - POSTGRES_USER=trimuser
+      - POSTGRES_PASSWORD=urlproj
+      - POSTGRES_DB=trimtrack
     volumes:
       - pgdata:/var/lib/postgresql/data
+      - ./backend/src/db/migrations/init.sql:/docker-entrypoint-initdb.d/init.sql
 
   redis:
     image: redis:alpine
