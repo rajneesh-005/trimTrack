@@ -5,6 +5,7 @@
     "rootDir": "..",
     "outDir": "./dist",
     "strict": true,
+    "types":["node","jest"],
     "esModuleInterop": true,
     "paths": {
       "@shared/*": ["../shared/*"]
