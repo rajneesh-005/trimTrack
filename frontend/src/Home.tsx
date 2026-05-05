@@ -17,6 +17,7 @@ function Home() {
     if(!token){
       return navigate('/auth');
     }
+    console.log(token);
     const response = await fetch('/api/shorten',{
       method:'POST',
       headers:{
@@ -26,7 +27,23 @@ function Home() {
       body: JSON.stringify({url:url})
     })
 
-    const data = await response.json();
+    if(!response.ok){
+      const text = await response.text();
+      console.error("Request Failed:",response.status,text);
+      return;
+    }
+    let data;
+    try{
+      data = await response.json();
+    }catch(err){
+      console.error("Invalid Json response",err);
+      return;
+    }
+    if(response.status==401){
+      localStorage.removeItem('token');
+      navigate('/auth');
+      return;
+    }
     setShortUrl(data.data.short_url);
   }
 

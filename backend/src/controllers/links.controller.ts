@@ -12,13 +12,13 @@ export async function createLink(req:Request,res:Response){
             });
         }
         if(!user_id){
-            return res.status(400).json({
+            return res.status(401).json({
                 error:"Unauthorized"
             })
         }
 
         const link = await CreateLinkService({url},user_id);
-
+        console.log("Controller Reached");
         return res.status(201).json({
             success:true,
             data:link
@@ -35,7 +35,7 @@ export async function getLinks(req:Request,res:Response){
     try{
         const user_id = req.user?.id;
         if(!user_id){ 
-            return res.status(400).json({
+            return res.status(401).json({
             error:"Unauthorized"
             })
         }

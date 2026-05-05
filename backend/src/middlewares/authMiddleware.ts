@@ -12,12 +12,13 @@ export function authMiddleware(req:Request,res:Response,next:NextFunction){
 
     const token = authHeader.split(' ')[1];
     const secret = config.JWT_SECRET;
-
+    console.log("SECRET",secret);
     try{
         const decoded = jwt.verify(token,secret) as JwtUserPayload;
         req.user = decoded;
         next();
     }catch(err){
+        console.log("JWT Error ",err)
         return res.status(401).json({message:"Cannot get decoded"});
     }
 }

@@ -2,7 +2,6 @@ import {NextFunction,Request,Response} from "express";
 import * as dns from "dns";
 import { promisify } from "util";
 import * as ipaddr from "ipaddr.js";
-
 const lookup = promisify(dns.lookup);
 async function isSafeUrl(urlString:string):Promise<boolean>{
     try{
@@ -11,7 +10,9 @@ async function isSafeUrl(urlString:string):Promise<boolean>{
         const {address} = await lookup(url.hostname);
         const addr = ipaddr.parse(address);
         const range = addr.range();
-
+        console.log("Checking URL ",urlString);
+        console.log("Resolved IP ",address);
+        console.log("Range ",range)
 
         return range == "unicast";
     }catch(err){

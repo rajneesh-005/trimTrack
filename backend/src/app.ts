@@ -13,9 +13,14 @@ app.use(express.json());
 
 const port = config.PORT;
 
+app.use((req,res,next)=>{
+    console.log("Backend HIT");
+    next();
+})
 app.get('/health',(req,res)=>{
     res.json({status:'ok'});
 });
+
 app.use('/api',authRoute);
 app.use('/api',authMiddleware,linkRouter);
 
@@ -24,5 +29,5 @@ app.use('/',redirecRoute);
 app.use('/api',authMiddleware,statRouter);
 
 app.listen(port,()=>{
-    console.log(`trimTrack is running at port at ${port}`)
+    console.log(`trimTrack is running at port at ${port}`);
 })
