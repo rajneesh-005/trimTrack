@@ -1,6 +1,7 @@
 import dotenv from 'dotenv'
 dotenv.config();
 console.log(process.env.DATABASE_URL);
+console.log(process.env.REDIS_URL);
 export const config = {
     PORT : Number(process.env.PORT) || 3000,
     DATABASE_URL : process.env.DATABASE_URL!,

@@ -1,0 +1,40 @@
+Before BullMQ
+         /\      Grafana   /‾‾/  
+    /\  /  \     |\  __   /  /   
+   /  \/    \    | |/ /  /   ‾‾\ 
+  /          \   |   (  |  (‾)  |
+ / __________ \  |_|\_\  \_____/ 
+
+
+     execution: local
+        script: test1.js
+        output: -
+
+     scenarios: (100.00%) 1 scenario, 50 max VUs, 50s max duration (incl. graceful stop):
+              * default: 50 looping VUs for 20s (gracefulStop: 30s)
+
+
+
+  █ TOTAL RESULTS 
+
+    HTTP
+    http_req_duration..............: avg=39.77ms min=358µs med=42.08ms max=359.75ms p(90)=85.2ms p(95)=120.34ms
+      { expected_response:true }...: avg=39.77ms min=358µs med=42.08ms max=359.75ms p(90)=85.2ms p(95)=120.34ms
+    http_req_failed................: 0.00%  0 out of 1900
+    http_reqs......................: 1900   91.471774/s
+
+    EXECUTION
+    iteration_duration.............: avg=1.08s   min=1.04s med=1.05s   max=1.47s    p(90)=1.13s  p(95)=1.42s   
+    iterations.....................: 950    45.735887/s
+    vus............................: 50     min=50        max=50
+    vus_max........................: 50     min=50        max=50
+
+    NETWORK
+    data_received..................: 73 MB  3.5 MB/s
+    data_sent......................: 387 kB 19 kB/s
+
+
+
+
+running (20.8s), 00/50 VUs, 950 complete and 0 interrupted iterations
+default ✓ [======================================] 50 VUs  20s

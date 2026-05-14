@@ -14,7 +14,6 @@ app.use(express.json());
 const port = config.PORT;
 
 app.use((req,res,next)=>{
-    console.log("Backend HIT");
     next();
 })
 app.get('/health',(req,res)=>{

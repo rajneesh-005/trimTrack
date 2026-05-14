@@ -13,11 +13,12 @@ function Home() {
 
   async function handleSave(){
     const token = localStorage.getItem('token');
-    if(shortUrl) return;
     if(!token){
       return navigate('/auth');
     }
     console.log(token);
+
+    setShortUrl('');
     const response = await fetch('/api/shorten',{
       method:'POST',
       headers:{
@@ -26,6 +27,11 @@ function Home() {
       },
       body: JSON.stringify({url:url})
     })
+    if(response.status==401){
+      localStorage.removeItem('token');
+      navigate('/auth');
+      return;
+    }
 
     if(!response.ok){
       const text = await response.text();
@@ -37,11 +43,6 @@ function Home() {
       data = await response.json();
     }catch(err){
       console.error("Invalid Json response",err);
-      return;
-    }
-    if(response.status==401){
-      localStorage.removeItem('token');
-      navigate('/auth');
       return;
     }
     setShortUrl(data.data.short_url);

@@ -1,7 +1,7 @@
 import { Request,Response } from "express";
 import { findByCode } from "../db/queries/links";
-import { ParsingData } from "../services/tracker";
 import { getCode, setCode } from "../cache/redis";
+import {clickQueue} from "../queue/click.queue" 
 
 export async function redirect(req:Request,res:Response){
     try{
@@ -24,13 +24,17 @@ export async function redirect(req:Request,res:Response){
             await setCode(code,url);
             console.log(`DB lookup took: ${Date.now()-start}ms`);
         }
-        res.redirect(302,url);
-        ParsingData(
-            code,
-            req.ip ?? '',
-            req.headers['user-agent'] ?? '',
-            req.headers['referer'] as string ?? ''
+        console.log("Before Queue Add");
+        await clickQueue.add("track-click",
+            {
+                short_code:code,
+                ip:req.ip ?? '',
+                userAgent:req.headers['user-agent'] ?? '',
+                referer:req.headers['referer'] as string ?? ''
+            }
         )
+        console.log("After Queue Add");
+        res.redirect(302,url);
     }catch(err){
         console.log("Redirect Error ",err);
 
